@@ -1,0 +1,5 @@
+#msg-list {
+  background-color: gainsboro;
+  height: 100px;
+  overflow-y: scroll;
+}
