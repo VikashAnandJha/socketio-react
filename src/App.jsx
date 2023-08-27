@@ -6,6 +6,8 @@ import ChatComponent from './ChatComponent';
 
 function App() {
   const [msgList, setmsgList] = useState([])
+  const [webcamData, setwebCamData] = useState('')
+  const [streamData, setstreamData] = useState(null)
   const [socket, setsocket] = useState(null)
   useEffect(() => {
     const socketn = io("http://192.168.0.101:3000");
@@ -23,6 +25,18 @@ function App() {
       setmsgList((oldmsg) => [...oldmsg, msg])
 
     });
+    socketn.on('webcam', function (msg) {
+
+      setwebCamData(msg)
+
+    });
+    socketn.on('stream', function (msg) {
+
+      console.log("Got stream")
+      console.log(msg)
+      setstreamData(msg)
+
+    });
 
 
   }, [])
@@ -31,6 +45,7 @@ function App() {
     <>
       <h1>welcome</h1>
 
+      <img src={webcamData} width={200} height={200} />
       <ChatComponent socket={socket} msgList={msgList} />
     </>
   )
